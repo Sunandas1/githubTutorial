@@ -18,7 +18,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: checkout repo
-      run: actions/checkout@v3
+      uses: actions/checkout@v3
       
     - name: install node js
       run: nvm install node
