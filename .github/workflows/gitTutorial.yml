@@ -23,6 +23,9 @@ jobs:
     - name: install node js
       run: sudo apt install nodejs
       
+    - name: install dependencies
+      run: npm install
+      
     - name: install gatsby
       run: npm install -g gatsby-cli
       
