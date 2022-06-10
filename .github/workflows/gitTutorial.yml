@@ -26,9 +26,6 @@ jobs:
     - name: install dependencies
       run: npm install
       
-    - name: audit check
-      run: npm audit --json > audit_repo.json
-      
     - name: install gatsby
       run: npm install -g gatsby-cli
       
