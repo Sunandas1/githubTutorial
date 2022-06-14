@@ -37,7 +37,7 @@ jobs:
       
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: SecurityCA
     steps:
     - name: download public folder to this deploy job
       uses: actions/download-artifact@v3
