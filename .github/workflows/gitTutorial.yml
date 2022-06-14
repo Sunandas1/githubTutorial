@@ -1,21 +1,12 @@
-# This is a basic workflow that is manually triggered
-
 name: upload gatsby app from github to VM ubuntu
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: checkout repo
       uses: actions/checkout@v3
@@ -40,6 +31,21 @@ jobs:
       
     - name: confirm public folder
       run: ls -la public
+    
+    - name: upload public folder as package 
+      uses: actions/upload-artifact@v3  
+      with: 
+        name: public-package
+        path: public
+      
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: download public folder to this deploy job
+      uses: actions/download-artifact@v3
+      with:
+        name: public-package
       
     - name: Copy the Public Folder of gatsby app to Ubuntu
       uses: marcodallasanta/ssh-scp-deploy@v1.2.0
