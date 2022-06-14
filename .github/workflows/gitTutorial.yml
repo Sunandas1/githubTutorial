@@ -59,12 +59,22 @@ jobs:
           
   SecurityCA:
       runs-on: ubuntu-latest
-      needs: build
+      #needs: build
       steps: 
       - name: checkout repo
         uses: actions/checkout@v3
         
       - name: do audit
         run: npm audit --json > /audit_repo.json
-        continue-on-error: true
+        #continue-on-error: true
+        
+      - name: list down files
+        run: ls -la
+        
+      - name: archive npm audit file & upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: npm audit file
+          path: audit_repo.json
+          if: always()
       
