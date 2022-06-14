@@ -66,4 +66,5 @@ jobs:
         
       - name: do audit
         run: npm audit --json > /audit_repo.json
+        continue-on-error: true
       
