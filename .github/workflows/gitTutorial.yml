@@ -17,9 +17,6 @@ jobs:
     - name: install dependencies
       run: npm install 
       
-    - name: do audit
-      run: npm audit --json > /audit_repo.json
-      
     - name: install gatsby
       run: npm install -g gatsby-cli
       
@@ -46,6 +43,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: public-package
+        path: public
       
     - name: Copy the Public Folder of gatsby app to Ubuntu
       uses: marcodallasanta/ssh-scp-deploy@v1.2.0
@@ -57,4 +55,15 @@ jobs:
           key: ${{secrets.KEY}}
           ssh_options: -o StrictHostKeyChecking=no
           pre_upload: sudo rm -rf /var/www/html/*
-          post_upload: sudo mv ~/public/* /var/www/html/ 
+          post_upload: sudo mv ~/public/* /var/www/html/
+          
+  SecurityCA:
+      runs-on: ubuntu-latest
+      needs: build
+      steps: 
+      - name: checkout repo
+        uses: actions/checkout@v3
+        
+      - name: do audit
+        run: npm audit --json > /audit_repo.json
+      
